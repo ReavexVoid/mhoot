@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1704067200000,
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "1840293456",
+    "stats": {
+      "quizzesCreated": 2,
+      "gamesPlayed": 5,
+      "averageScore": 82,
+      "highScore": 95
+    },
+    "createdAt": "2024-01-01T12:00:00.000Z",
+    "quizzes": [
+      1,
+      2
+    ],
+    "gameHistory": []
+  },
+  {
+    "id": 1768239089579,
+    "username": "Admin",
+    "email": "reavexfromvoid6@gmail.com",
+    "password": "-680972898",
+    "stats": {
+      "quizzesCreated": 0,
+      "gamesPlayed": 0,
+      "averageScore": 0,
+      "highScore": 0
+    },
+    "createdAt": "2026-01-12T17:31:29.579Z",
+    "quizzes": [],
+    "gameHistory": []
+  },
+  {
+    "id": 1768239152050,
+    "username": "Testzln",
+    "email": "kunzalan10@gmail.com",
+    "password": "-453785017",
+    "stats": {
+      "quizzesCreated": 0,
+      "gamesPlayed": 0,
+      "averageScore": 0,
+      "highScore": 0
+    },
+    "createdAt": "2026-01-12T17:32:32.050Z",
+    "quizzes": [],
+    "gameHistory": []
+  }
+]

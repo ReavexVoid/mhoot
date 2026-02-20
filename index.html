@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahoot - Quiz Party Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="landing-container">
+            <div class="logo-section">
+                <h1 class="logo">🎮 MAHOOT</h1>
+                <p class="tagline">Make Quiz Parties. Test Knowledge. Have Fun!</p>
+            </div>
+
+            <div class="landing-buttons">
+                <button class="btn btn-primary" onclick="showPage('home-page')">
+                    Get Started
+                </button>
+                <button class="btn btn-secondary" onclick="showPage('login-page')">
+                    Sign In
+                </button>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Create Quizzes</h3>
+                    <p>Design custom quizzes with ease</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">👥</span>
+                    <h3>Host Parties</h3>
+                    <p>Play with friends in real-time</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🏆</span>
+                    <h3>Compete</h3>
+                    <p>Earn points and climb leaderboards</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Page (Main Dashboard) -->
+    <div id="home-page" class="page">
+        <nav class="navbar">
+            <div class="nav-left">
+                <h2 class="nav-logo">🎮 MAHOOT</h2>
+            </div>
+            <div class="nav-right">
+                <span id="user-greeting" class="user-greeting"></span>
+                <button id="user-menu-btn" class="user-menu-btn">👤</button>
+                <div id="user-menu" class="user-menu">
+                    <a href="#" onclick="showProfile(); return false;">Profile</a>
+                    <a href="#" onclick="logout(); return false;">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <div class="welcome-section">
+                <h2 id="welcome-msg">Welcome to Mahoot!</h2>
+                <p>Choose your next adventure:</p>
+            </div>
+
+            <div class="action-grid">
+                <div class="action-card" onclick="showPage('create-quiz-page')">
+                    <span class="action-icon">✏️</span>
+                    <h3>Create Quiz</h3>
+                    <p>Design a new quiz for your party</p>
+                </div>
+
+                <div class="action-card" onclick="showPage('join-party-page')">
+                    <span class="action-icon">🎪</span>
+                    <h3>Join Party</h3>
+                    <p>Enter a party code</p>
+                </div>
+
+                <div id="create-party-card" class="action-card" onclick="showCreateParty()">
+                    <span class="action-icon">🎉</span>
+                    <h3>Host Party</h3>
+                    <p>Create a new party room</p>
+                </div>
+
+                <div class="action-card" onclick="showPage('browse-quizzes-page')">
+                    <span class="action-icon">📚</span>
+                    <h3>Browse Quizzes</h3>
+                    <p>Play community quizzes</p>
+                </div>
+            </div>
+
+            <div class="recent-section">
+                <h3>Your Recent Quizzes</h3>
+                <div id="recent-quizzes" class="recent-list">
+                    <p class="empty-state">No quizzes yet. Create one to get started!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Sign In to Mahoot</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Sign In</button>
+                </form>
+                <p class="auth-toggle">Don't have an account? <a href="#" onclick="showPage('register-page'); return false;">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="register-page" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Create Account</h2>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-username" required placeholder="your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password-confirm">Confirm Password</label>
+                        <input type="password" id="register-password-confirm" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Create Account</button>
+                </form>
+                <p class="auth-toggle">Already have an account? <a href="#" onclick="showPage('login-page'); return false;">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Quiz Page -->
+    <div id="create-quiz-page" class="page">
+        <div class="quiz-creator">
+            <div class="creator-header">
+                <h2>Create Your Quiz</h2>
+                <button class="back-btn" onclick="goBack()">← Back</button>
+            </div>
+
+            <div class="creator-container">
+                <div class="quiz-info-section">
+                    <h3>Quiz Details</h3>
+                    <div class="form-group">
+                        <label for="quiz-title">Quiz Title</label>
+                        <input type="text" id="quiz-title" placeholder="Enter quiz title">
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz-description">Description</label>
+                        <textarea id="quiz-description" placeholder="Describe your quiz"></textarea>
+                    </div>
+                </div>
+
+                <div class="questions-section">
+                    <h3>Questions</h3>
+                    <div id="questions-list" class="questions-list"></div>
+                    <button class="btn btn-secondary" onclick="addQuestion()">+ Add Question</button>
+                </div>
+
+                <div class="creator-actions">
+                    <button class="btn btn-danger" onclick="discardQuiz()">Discard</button>
+                    <button class="btn btn-primary" onclick="saveQuiz()">Save Quiz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Browse Quizzes Page -->
+    <div id="browse-quizzes-page" class="page">
+        <div class="browse-container">
+            <div class="browse-header">
+                <h2>Browse Quizzes</h2>
+                <button class="back-btn" onclick="goBack()">← Back</button>
+            </div>
+
+            <div class="browse-filters">
+                <input type="text" id="quiz-search" placeholder="Search quizzes..." onkeyup="filterQuizzes()">
+                <select id="quiz-sort" onchange="filterQuizzes()">
+                    <option value="recent">Most Recent</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="trending">Trending</option>
+                </select>
+            </div>
+
+            <div id="quizzes-grid" class="quizzes-grid"></div>
+        </div>
+    </div>
+
+    <!-- Join Party Page -->
+    <div id="join-party-page" class="page">
+        <div class="join-party-container">
+            <div class="join-header">
+                <h2>Join a Party</h2>
+                <button class="back-btn" onclick="goBack()">← Back</button>
+            </div>
+
+            <div class="join-form">
+                <div class="form-group">
+                    <label for="party-code">Party Code</label>
+                    <input type="text" id="party-code" placeholder="Enter 6-digit party code" maxlength="6">
+                </div>
+                <button class="btn btn-primary full-width" onclick="joinParty()">Join Party</button>
+            </div>
+
+            <div id="available-parties" class="available-parties">
+                <h3>Available Parties</h3>
+                <div id="parties-list" class="parties-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Party Lobby Page -->
+    <div id="party-lobby-page" class="page">
+        <div class="lobby-container">
+            <div class="lobby-header">
+                <h2 id="party-name">Party Lobby</h2>
+                <span id="party-code-display" class="party-code-badge"></span>
+            </div>
+
+            <div class="lobby-content">
+                <div class="quiz-preview">
+                    <h3>Quiz: <span id="lobby-quiz-title"></span></h3>
+                    <p id="lobby-quiz-desc"></p>
+                </div>
+
+                <div class="players-section">
+                    <h3>Players (<span id="player-count">0</span>)</h3>
+                    <div id="players-list" class="players-list"></div>
+                </div>
+
+                <div class="host-controls" id="host-controls" style="display: none;">
+                    <button class="btn btn-primary" onclick="startGame()">Start Game</button>
+                    <button class="btn btn-secondary" onclick="leaveParty()">End Party</button>
+                </div>
+
+                <div class="player-controls" id="player-controls">
+                    <button class="btn btn-secondary" onclick="leaveParty()">Leave Party</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Play Page -->
+    <div id="quiz-play-page" class="page">
+        <div class="quiz-play-container">
+            <div class="quiz-header">
+                <div class="quiz-progress">
+                    <span id="question-counter">1/10</span>
+                    <div class="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                </div>
+                <div class="quiz-timer">
+                    <span id="timer">30</span>s
+                </div>
+            </div>
+
+            <div class="quiz-content">
+                <h2 id="question-text"></h2>
+
+                <div id="answers-grid" class="answers-grid"></div>
+
+                <div class="quiz-footer">
+                    <button class="btn btn-secondary" onclick="skipQuestion()">Skip</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results-page" class="page">
+        <div class="results-container">
+            <h2>Game Results</h2>
+
+            <div class="results-summary">
+                <div class="result-card">
+                    <h3>Your Score</h3>
+                    <p id="your-score" class="score-display">0</p>
+                </div>
+                <div class="result-card">
+                    <h3>Rank</h3>
+                    <p id="your-rank" class="rank-display">#1</p>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h3>Leaderboard</h3>
+                <div id="leaderboard" class="leaderboard-table"></div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-primary" onclick="showPage('home-page')">Back to Home</button>
+                <button class="btn btn-secondary" onclick="playAgain()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profile-page" class="page">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>My Profile</h2>
+                <button class="back-btn" onclick="goBack()">← Back</button>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <h4>Quizzes Created</h4>
+                        <p id="stat-quizzes">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Games Played</h4>
+                        <p id="stat-games">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Average Score</h4>
+                        <p id="stat-avg">0%</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>High Score</h4>
+                        <p id="stat-high">0</p>
+                    </div>
+                </div>
+
+                <div class="profile-quizzes">
+                    <h3>My Quizzes</h3>
+                    <div id="my-quizzes" class="quizzes-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Party Modal -->
+    <div id="create-party-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create a Party</h3>
+                <button class="close-btn" onclick="closeModal('create-party-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="party-quiz-select">Select Quiz</label>
+                    <select id="party-quiz-select">
+                        <option value="">Choose a quiz...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="party-max-players">Max Players</label>
+                    <input type="number" id="party-max-players" value="50" min="2" max="100">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('create-party-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createParty()">Create Party</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/quiz.js"></script>
+    <script src="scripts/party.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
