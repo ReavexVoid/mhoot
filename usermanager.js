@@ -8,11 +8,6 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const USERS_FILE = path.join(__dirname, 'users.json');
 
-// Ensure data directory exists
-if (!fs.existsSync(path.join(__dirname, 'data'))) {
-    fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
-}
-
 class UserManager {
     constructor() {
         this.users = this.loadUsers();
@@ -260,4 +255,3 @@ class UserManager {
 }
 
 export default new UserManager();
-
